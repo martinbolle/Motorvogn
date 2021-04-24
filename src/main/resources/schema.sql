@@ -1,0 +1,19 @@
+CREATE TABLE Motorvogn
+(
+    id INTEGER AUTO_INCREMENT NOT NULL,
+    personnr VARCHAR (50) NOT NULL,
+    navn VARCHAR (50) NOT NULL,
+    adresse VARCHAR (50) NOT NULL,
+    kjennetegn VARCHAR (50) NOT NULL,
+    merke VARCHAR (40) NOT NULL,
+    type VARCHAR (40) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE Bil
+(
+    id INTEGER AUTO_INCREMENT NOT NULL,
+    merke VARCHAR (20) NOT NULL,
+    type VARCHAR (20) NOT NULL,
+    PRIMARY KEY (id)
+);
