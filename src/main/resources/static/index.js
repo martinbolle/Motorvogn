@@ -54,11 +54,11 @@ const inputval = motorvogn => {
 }
 
 const formater = biler =>{
-    let ut = "<table class='table table-striped'><tr><th>Personnr</th><th>Navn</th><th>Adresse</th><th>Kjennetegn</th><th>Bilmerke</th><th>Biltype</th></tr>";
+    let ut = "<table class='table table-striped'><tr><th>Personnr</th><th>Navn</th><th>Adresse</th><th>Kjennetegn</th><th>Bilmerke</th><th>Biltype</th><th></th></tr>";
 
     for (let bil of biler){
         ut+= "<tr><td>" + bil.personnr + "</td><td>" + bil.navn + "</td><td>" + bil.adresse + "</td><td>"+ bil.kjennetegn+"</td>"
-             +"<td>"+ bil.merke+"</td><td>"+bil.type+"</td></tr>";
+             +"<td>"+ bil.merke+"</td><td>"+bil.type+"</td><td><button class='btn btn-danger' onclick='slettEnMotorvogn("+bil.id+")'>Slett</button></td></tr>";
     }
     ut+="</table>";
 
@@ -100,4 +100,12 @@ function formaterTyper(biler, valgtMerke){
     ut+="</select>";
 
     $("#biltype").html(ut);
+}
+
+function slettEnMotorvogn(id){
+    let url = "/slettEn?id="+id;
+    $.get(url, function (){
+        hent();
+    })
+
 }

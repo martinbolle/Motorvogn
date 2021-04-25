@@ -30,8 +30,8 @@ public class MotorvognRepository {
 
     }
     public void slettEnMotorvogn(int id){
-        String sql = "DELETE FROM Motorvogn WHERE id=?";
-        db.update(sql);
+        String sql = "DELETE FROM Motorvogn WHERE id=?;";
+        db.update(sql, id);
 
     }
 

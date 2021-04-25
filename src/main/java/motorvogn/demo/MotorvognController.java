@@ -39,7 +39,7 @@ public class MotorvognController {
         rep.slettAlle();
     }
 
-    @GetMapping("/slettEnMotorvogn")
+    @GetMapping("/slettEn")
     public void slettEnMotorvogn(int id){
         rep.slettEnMotorvogn(id);
     }
