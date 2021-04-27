@@ -60,7 +60,12 @@ $("#regMotorvogn").click(() => {
     };
 
     if(inputval(motorvogn)){
-        $.post("/lagre", motorvogn, () => hent());
+        $.post("/lagre", motorvogn, () => hent())
+
+    .fail(function (jqXHR){
+            const json = $.parseJSON(jqXHR.responseText);
+            $("#feil").html(json.message);
+        });
 
         window.location.href="/";
     } else {

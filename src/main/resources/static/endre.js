@@ -80,9 +80,13 @@ function endreMotorvogn(){
     };
 
     if(inputval(motorvogn)){
-        $.post("/endre", motorvogn, () => hent());
+        $.post("/endre", motorvogn, () => hent())
 
-        window.location.href="/";
+    .fail(function (jqXHR){
+            const json = $.parseJSON(jqXHR.responseText);
+            $("#feil").html(json.message);
+        });
+        window.location.href="/"
 
     } else {
         console.log("Feil i input");

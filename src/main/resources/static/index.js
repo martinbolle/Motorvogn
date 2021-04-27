@@ -10,7 +10,14 @@ $("#slettAlle").click(() =>{
 });
 
 
-const hent = () => $.get("/hentAlle", biler => formater(biler));
+const hent = () => $.get("/hentAlle", biler => formater(biler))
+
+
+    .fail(function (jqXHR){
+        const json = $.parseJSON(jqXHR.responseText);
+        $("#feil").html(json.message);
+    });
+
 
 
 
