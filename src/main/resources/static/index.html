@@ -12,46 +12,18 @@
 <body>
 <div class="container">
     <div class="row">
-        <div class="col-md-4">
-            <h1>Motorvognregister</h1>
-            <form class="form">
-                <div class="form-group">
-                    <label for="personnr">Personnummer</label>
-                    <input type="text" class="form-control" id="personnr"/>
-                </div>
-                <div class="form-group">
-                    <label for="navn">Navn</label>
-                    <input type="text" class="form-control" id="navn"/>
-                </div>
-                <div class="form-group">
-                    <label for="adresse">Adresse</label>
-                    <input type="text" class="form-control" id="adresse"/>
-                </div>
-                <div class="form-group">
-                    <label for="kjennetegn">Kjennetegn</label>
-                    <input type="text" class="form-control" id="kjennetegn"/>
-                </div>
-                <div class="form-group">
-                    <label for="bilmerke">Bilmerke</label>
-                    <div id="bilmerke" class="dropdown"></div>
-                </div>
-                <div class="form-group">
-                    <label for="biltype">Biltype</label>
-                    <div id="biltype" class="dropdown"></div>
-                </div>
-            </form>
-            <button id="regMotorvogn" class="btn btn-primary">Registrer</button>
-        </div>
         <div class="col-md-8">
             <h1>Alle bilene</h1>
+            <div id="bilene" class="table-responsive"></div>
             <div id="personRegister"></div>
+            <a href="registrering.html" class="btn btn-primary">Registrere</a>
             <button id="slettAlle" class="btn btn-danger">Slett alle</button>
 
         </div>
 
     </div>
 
-    </div>
+</div>
 </div>
 
 </body>

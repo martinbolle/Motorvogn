@@ -29,6 +29,19 @@ public class MotorvognRepository {
         return db.query(sql, new BeanPropertyRowMapper(Motorvogn.class));
 
     }
+
+    public Motorvogn hentEnMotorvogn(int id){
+        String sql = "SELECT * FROM Motorvogn WHERE id=?";
+        List<Motorvogn> enMotorvogn = db.query(sql, new BeanPropertyRowMapper(Motorvogn.class), id);
+        return enMotorvogn.get(0);
+    }
+
+    public void endreMotorvogn(Motorvogn motorvogn){
+        String sql = "UPDATE Motorvogn SET personnr=?, navn=?, adresse=?, kjennetegn=?, merke=?, type=? WHERE id=?";
+        db.update(sql, motorvogn.getPersonnr(), motorvogn.getNavn(), motorvogn.getAdresse(),
+                motorvogn.getKjennetegn(), motorvogn.getMerke(), motorvogn.getType(), motorvogn.getId());
+    }
+
     public void slettEnMotorvogn(int id){
         String sql = "DELETE FROM Motorvogn WHERE id=?;";
         db.update(sql, id);

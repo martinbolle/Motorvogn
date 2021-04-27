@@ -9,14 +9,13 @@ public class Motorvogn {
     private String merke;
     private String type;
 
-    public Motorvogn (int id, String personnr, String navn, String adresse, String kjennetegn, String merke, String type){
+    public Motorvogn (String personnr, String navn, String adresse, String kjennetegn, String merke, String type){
         this.personnr = personnr;
         this.navn = navn;
         this.adresse = adresse;
         this.kjennetegn = kjennetegn;
         this.merke = merke;
         this.type = type;
-        this.id = id;
     }
     public Motorvogn(){
 

@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -14,9 +13,6 @@ public class MotorvognController {
 
     @Autowired
     private MotorvognRepository rep;
-
-    private final List<Motorvogn> alleMotorvogner = new ArrayList<>();
-    private final List<Bil> bilRegister = new ArrayList<>();
 
 
     @GetMapping("/hentBiler")
@@ -32,6 +28,17 @@ public class MotorvognController {
     @GetMapping("/hentAlle")
     public List<Motorvogn> hentAlle(){
         return rep.hentAlle();
+    }
+
+    @GetMapping("/hentEnMotorvogn")
+    public Motorvogn hentEnMotorvogn(int id){
+        return rep.hentEnMotorvogn(id);
+    }
+
+
+    @PostMapping("/endre")
+    public void endre(Motorvogn motorvogn){
+        rep.endreMotorvogn(motorvogn);
     }
 
     @GetMapping("/slettAlle")
