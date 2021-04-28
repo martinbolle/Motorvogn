@@ -67,7 +67,7 @@ $("#regMotorvogn").click(() => {
             $("#feil").html(json.message);
         });
 
-        window.location.href="/";
+        window.location.href="/liste.html";
     } else {
         console.log("Feil i input");
     }

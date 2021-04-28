@@ -86,7 +86,7 @@ function endreMotorvogn(){
             const json = $.parseJSON(jqXHR.responseText);
             $("#feil").html(json.message);
         });
-        window.location.href="/"
+        window.location.href="/liste.html"
 
     } else {
         console.log("Feil i input");
@@ -95,4 +95,9 @@ function endreMotorvogn(){
 
 
 
-const hent = () => $.get("/hentAlle", biler => formater(biler));
+const hent = () => $.get("/hentAlle", biler => formater(biler))
+
+    .fail(function (jqXHR){
+        const json = $.parseJSON(jqXHR.responseText);
+        $("#feil").html(json.message);
+    });

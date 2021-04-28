@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <title>Motorvognregister</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js"></script>
+    <script src="index.js"></script>
+
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h1>Alle bilene</h1>
+
+            <div id="bilene" class="table-responsive"></div>
+            <div id="personRegister"></div>
+            <a href="registrering.html" class="btn btn-primary">Registrere</a>
+            <button id="slettAlle" class="btn btn-danger">Slett alle</button>
+            <button class="btn btn-danger" onclick="logout()">Logg ut</button>
+            <div id="feil" style="color: red"></div>
+        </div>
+
+    </div>
+
+</div>
+</div>
+<script src="liste.js"></script>
+
+
+</body>
+</html>

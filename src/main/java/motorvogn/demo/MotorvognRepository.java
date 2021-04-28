@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Comparator;
 
 @Repository
 public class MotorvognRepository {
@@ -32,6 +33,7 @@ public class MotorvognRepository {
         String sql = "SELECT * FROM Motorvogn";
         try {
             List<Motorvogn> enMotorvogn = db.query(sql, new BeanPropertyRowMapper(Motorvogn.class));
+            enMotorvogn.sort((Comparator.comparing(Motorvogn::getAdresse)));
             return enMotorvogn;
         } catch (Exception e){
             logger.error("Feil i hentAlle: " + e);
@@ -92,6 +94,20 @@ public class MotorvognRepository {
         } catch (Exception e){
             logger.error("Feil i hentAlleBiler: "+ e);
             return null;
+        }
+    }
+    public boolean loggInn(String brukernavn, String passord){
+        String sql = "SELECT count(*) FROM Bruker WHERE brukernavn=? AND passord=?";
+        try {
+            int funnetEnBruker = db.queryForObject(sql, Integer.class, brukernavn, passord);
+            if(funnetEnBruker>0){
+                return true;
+            } else{
+                return false;
+            }
+
+        } catch (Exception e){
+            return false;
         }
     }
 }

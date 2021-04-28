@@ -12,3 +12,4 @@ INSERT INTO Bil (merke,type) VALUES ( 'Audi','A8' );
 INSERT INTO Bil (merke,type) VALUES ( 'Audi','Q7' );
 INSERT INTO Bil (merke,type) VALUES ( 'Audi','Q8' );
 
+INSERT INTO Bruker(brukernavn, passord) VALUES('Admin', 'Admin1234');

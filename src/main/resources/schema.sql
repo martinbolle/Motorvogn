@@ -17,3 +17,11 @@ CREATE TABLE Bil
     type VARCHAR (20) NOT NULL,
     PRIMARY KEY (id)
 );
+
+CREATE TABLE Bruker
+(
+    id INTEGER AUTO_INCREMENT NOT NULL,
+    brukernavn VARCHAR (100) NOT NULL,
+    passord VARCHAR (100) NOT NULL,
+    PRIMARY KEY (id)
+);

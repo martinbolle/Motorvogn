@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -18,6 +19,9 @@ public class MotorvognController {
 
     @Autowired
     private MotorvognRepository rep;
+
+    @Autowired
+    private HttpSession session;
 
     private Logger logger = LoggerFactory.getLogger(MotorvognController.class);
 
@@ -28,6 +32,7 @@ public class MotorvognController {
         String regexKjennetegn = "[A-Z][A-Z][0-9]{5}";
         String regexMerke = "[a-zA-Z. \\-]{2,20}";
         String regexType = "[0-9a-zA-ZæøåÆØÅ .\\-]{2,10}";
+
         boolean personnrOK = motorvogn.getPersonnr().matches(regexPersonnr);
         boolean navnOK = motorvogn.getNavn().matches(regexNavn);
         boolean adresseOK = motorvogn.getAdresse().matches(regexAdresse);
@@ -63,12 +68,17 @@ public class MotorvognController {
         }
     }
     @GetMapping("/hentAlle")
-    public List<Motorvogn> hentAlle(HttpServletResponse response) throws IOException{
-        List<Motorvogn> alleMotorvogner = rep.hentAlle();
-        if(alleMotorvogner == null){
-            response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Feil i DB - prøv igjen senere");
+    public List<Motorvogn> hentAlle(HttpServletResponse response) throws IOException {
+        if ((boolean) session.getAttribute("Innlogget")) {
+            List<Motorvogn> alleMotorvogner = rep.hentAlle();
+            if (alleMotorvogner == null) {
+                response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Feil i DB - prøv igjen senere");
+            }
+            return alleMotorvogner;
+        } else{
+            response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Du må være logget inn for å se register");
+            return null;
         }
-        return alleMotorvogner;
     }
 
     @GetMapping("/hentEnMotorvogn")
@@ -103,5 +113,20 @@ public class MotorvognController {
         if(!rep.slettEnMotorvogn(id)){
             response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Feil i DB - prøv igjen senere");
         }
+    }
+
+    @GetMapping("/login")
+    public boolean logInn(String brukernavn, String passord){
+        if(rep.loggInn(brukernavn, passord)){
+            session.setAttribute("Innlogget", true);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @GetMapping("/logout")
+    public void loggUt(){
+        session.setAttribute("Innlogget", false);
     }
 }
