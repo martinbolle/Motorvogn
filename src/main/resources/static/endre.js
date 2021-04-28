@@ -79,7 +79,7 @@ function endreMotorvogn(){
         type: type.val()
     };
 
-    if(inputval(motorvogn)){
+    if(ingenValideringsFeil()){
         $.post("/endre", motorvogn, () => hent())
 
     .fail(function (jqXHR){
@@ -93,13 +93,6 @@ function endreMotorvogn(){
     }
 }
 
-const inputval = motorvogn => {
-    if (motorvogn.personnr ==="") return false
-    else if (motorvogn.navn ==="") return false
-    else if (motorvogn.adresse ==="") return false
-    else if (motorvogn.kjennetegn ==="") return false
-    else if (motorvogn.merke ==="") return false
-    else return motorvogn.type !== "";
-}
+
 
 const hent = () => $.get("/hentAlle", biler => formater(biler));

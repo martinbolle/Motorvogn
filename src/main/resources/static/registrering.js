@@ -59,7 +59,7 @@ $("#regMotorvogn").click(() => {
         type: type.val()
     };
 
-    if(inputval(motorvogn)){
+    if(ingenValideringsFeil()){
         $.post("/lagre", motorvogn, () => hent())
 
     .fail(function (jqXHR){
@@ -73,13 +73,5 @@ $("#regMotorvogn").click(() => {
     }
 });
 
-const inputval = motorvogn => {
-    if (motorvogn.personnr ==="") return false
-    else if (motorvogn.navn ==="") return false
-    else if (motorvogn.adresse ==="") return false
-    else if (motorvogn.kjennetegn ==="") return false
-    else if (motorvogn.merke ==="") return false
-    else return motorvogn.type !== "";
-}
 
 const hent = () => $.get("/hentAlle", biler => formater(biler));

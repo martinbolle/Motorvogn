@@ -18,7 +18,6 @@ public class MotorvognRepository {
 
     private Logger logger = LoggerFactory.getLogger(MotorvognRepository.class);
 
-
     public boolean lagreMotorvogn(Motorvogn motorvogn){
         String sql = "INSERT INTO Motorvogn (personnr, navn, adresse, kjennetegn, merke, type) VALUES(?,?,?,?,?,?)";
         try {

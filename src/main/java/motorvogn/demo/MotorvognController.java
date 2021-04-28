@@ -1,6 +1,8 @@
 package motorvogn.demo;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +19,28 @@ public class MotorvognController {
     @Autowired
     private MotorvognRepository rep;
 
+    private Logger logger = LoggerFactory.getLogger(MotorvognController.class);
+
+    private boolean validerMotorvognOK (Motorvogn motorvogn){
+        String regexPersonnr = "[0-9]{11}";
+        String regexNavn = "[a-zæøåA-ZÆØÅ .\\-]{2,30}";
+        String regexAdresse = "[0-9a-zA-ZæøåÆØÅ .\\-]{2,30}";
+        String regexKjennetegn = "[A-Z][A-Z][0-9]{5}";
+        String regexMerke = "[a-zA-Z. \\-]{2,20}";
+        String regexType = "[0-9a-zA-ZæøåÆØÅ .\\-]{2,10}";
+        boolean personnrOK = motorvogn.getPersonnr().matches(regexPersonnr);
+        boolean navnOK = motorvogn.getNavn().matches(regexNavn);
+        boolean adresseOK = motorvogn.getAdresse().matches(regexAdresse);
+        boolean kjennetegnOK = motorvogn.getKjennetegn().matches(regexKjennetegn);
+        boolean merkeOK = motorvogn.getMerke().matches(regexMerke);
+        boolean typeOK = motorvogn.getType().matches(regexType);
+        if (personnrOK && navnOK && adresseOK && kjennetegnOK && merkeOK && typeOK){
+            return true;
+        }
+        logger.error("Valideringsfeil");
+        return false;
+    }
+
 
     @GetMapping("/hentBiler")
     public List<Bil> hentBiler(HttpServletResponse response) throws IOException{
@@ -29,12 +53,15 @@ public class MotorvognController {
     }
 
     @PostMapping("/lagre")
-    public void lagreKunde(Motorvogn motorvogn, HttpServletResponse response) throws IOException{
-        if(!rep.lagreMotorvogn(motorvogn)){
-            response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Feil i DB - prøv igjen senere");
+    public void lagreKunde(Motorvogn motorvogn, HttpServletResponse response) throws IOException {
+        if (validerMotorvognOK(motorvogn)) {
+            if (!rep.lagreMotorvogn(motorvogn)) {
+                response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Feil i DB - prøv igjen senere");
+            }
+        } else {
+            response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Valideringsfeil - feil i input");
         }
     }
-
     @GetMapping("/hentAlle")
     public List<Motorvogn> hentAlle(HttpServletResponse response) throws IOException{
         List<Motorvogn> alleMotorvogner = rep.hentAlle();
@@ -54,9 +81,13 @@ public class MotorvognController {
     }
 
     @PostMapping("/endre")
-    public void endre(Motorvogn motorvogn, HttpServletResponse response) throws IOException{
-        if(!rep.endreMotorvogn(motorvogn)){
-            response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Feil i DB - prøv igjen senere");
+    public void endre(Motorvogn motorvogn, HttpServletResponse response) throws IOException {
+        if (validerMotorvognOK(motorvogn)) {
+            if (!rep.endreMotorvogn(motorvogn)) {
+                response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Feil i DB - prøv igjen senere");
+            }
+        } else {
+            response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Vailideringsfeil - feil i input");
         }
     }
 
