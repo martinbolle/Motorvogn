@@ -28,7 +28,7 @@ public class MotorvognController {
     private boolean validerMotorvognOK (Motorvogn motorvogn){
         String regexPersonnr = "[0-9]{11}";
         String regexNavn = "[a-zæøåA-ZÆØÅ .\\-]{2,30}";
-        String regexAdresse = "[0-9a-zA-ZæøåÆØÅ .\\-]{2,30}";
+        String regexAdresse = "[0-9a-zA-ZæøåÆØÅ .,\\-]{2,30}";
         String regexKjennetegn = "[A-Z][A-Z][0-9]{5}";
         String regexMerke = "[a-zA-Z. \\-]{2,20}";
         String regexType = "[0-9a-zA-ZæøåÆØÅ .\\-]{2,10}";

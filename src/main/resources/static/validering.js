@@ -26,7 +26,7 @@ const validerNavn = () => {
 
 const validerAdresse = () => {
     const adresse = $("#adresse").val();
-    const regexA = /^[0-9a-zA-ZæøåÆØÅ. \-]{2,30}$/;
+    const regexA = /^[0-9a-zA-ZæøåÆØÅ. \-,]{2,30}$/;
     const ok = regexA.test(adresse);
     if(!ok){
         $("#feilAdresse").html("Adressen må bestå av 2-30 bokstaver");
