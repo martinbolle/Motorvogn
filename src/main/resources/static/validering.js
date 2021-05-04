@@ -63,3 +63,36 @@ const validerMerke = () =>{
 const ingenValideringsFeil = () => {
     return (validerPersonnr() && validerNavn() && validerAdresse() && validerKjennetegn() && validerMerke());
 }
+
+const validerBrukernavn = () => {
+    const brukernavn = $("#brukernavn").val();
+    const regexp = /^[a-zA-ZæøåÆØÅ. \-]{2,20}$/;
+    const ok = regexp.test(brukernavn);
+    if (!ok) {
+        $("#feilBrukernavn").html("Navnet må bestå av 2 til 20 bokstaver");
+        return false;
+    } else {
+        $("#feilBrukernavn").html("");
+        return true;
+    }
+}
+
+const validerPassord = () => {
+    const passord = $("#passord").val();
+    const regexp = /^(?=.*[A-ZÆØÅa-zøæå])(?=.*\d)[A-ZØÆÅa-zøæå\d]{8,}$/;
+    const ok = regexp.test(passord);
+    if (!ok) {
+        $("#feilPassord").html("Passordet må være minimum 8 tegn, minst en bokstav og et tall");
+        return false;
+    } else {
+        $("#feilPassord").html("");
+        return true;
+    }
+}
+
+const loggInnValideringOK = () => {
+    return (validerBrukernavn && validerPassord());
+}
+
+
+

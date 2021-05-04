@@ -115,6 +115,14 @@ public class MotorvognController {
         }
     }
 
+
+    @GetMapping("/logout")
+    public void loggUt(){
+        session.setAttribute("Innlogget", false);
+    }
+
+
+
     @GetMapping("/login")
     public boolean logInn(String brukernavn, String passord){
         if(rep.loggInn(brukernavn, passord)){
@@ -125,8 +133,15 @@ public class MotorvognController {
         }
     }
 
-    @GetMapping("/logout")
-    public void loggUt(){
-        session.setAttribute("Innlogget", false);
+    @PostMapping("/nyBruker")
+    public void registrerBruker(Bruker bruker, HttpServletResponse response) throws IOException{
+        if(!rep.registrerBruker(bruker)){
+            response.sendError(500, "Lagre bruker feilet");
+        }
+    }
+
+    @GetMapping("/krypterAllePassord")
+    public boolean krypterAllePassord(){
+        return rep.krypterAllePassord();
     }
 }
