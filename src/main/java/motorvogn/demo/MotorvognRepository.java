@@ -1,17 +1,18 @@
 package motorvogn.demo;
 
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Repository;
 
 
-import java.util.List;
 import java.util.Comparator;
+import java.util.List;
 
 @Repository
 public class MotorvognRepository {
@@ -101,31 +102,31 @@ public class MotorvognRepository {
         }
     }
 
-    public boolean loggInn(String brukernavn, String passord) {
-        String sql = "SELECT * FROM Bruker WHERE brukernavn=?";
-        try {
-            List<Bruker> brukere = db.query(sql, new BeanPropertyRowMapper(Bruker.class), brukernavn);
 
-            if (brukere != null) {
-                if (sjekkPassord(passord, brukere.get(0).getPassord())){
+    public boolean loggInn(String brukernavn, String passord) {
+        String sql = "SELECT * FROM Bruker WHERE brukernavn = ?";
+        try {
+            List<Bruker> list = db.query(sql, new BeanPropertyRowMapper(Bruker.class), brukernavn);
+
+            if (list != null) {
+                if (sjekkPassord(passord, list.get(0).getPassord())){
                     return true;
                 }
             }
             return false;
         } catch (Exception e){
-            logger.error(e.getMessage());
+            logger.error("Klarte ikke logge inn " + e);
             return false;
         }
     }
 
-    public boolean sjekkPassord(String passord, String hashPassord){
-        BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder(14);
-
-        return bCrypt.matches(passord, hashPassord);
+    public boolean sjekkPassord(String passord, String hashPassword) {
+        BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder(15);
+        return bCrypt.matches(passord, hashPassword);
     }
 
     public boolean registrerBruker(Bruker bruker){
-        String sql = "INSERT INTO Bruker (brukernavn, passord) VALUES(?,?)";
+        String sql = "INSERT INTO Bruker (brukernavn, passord) VALUES (?,?)";
 
         try{
             String kryptertPassord = krypterPassord(bruker.getPassord());
@@ -137,9 +138,8 @@ public class MotorvognRepository {
         }
     }
 
-    private String krypterPassord(String passord){
+    public String krypterPassord(String passord) {
         BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder(15);
-
         return bCrypt.encode(passord);
     }
 
@@ -148,17 +148,17 @@ public class MotorvognRepository {
         String kryptertPassord;
 
         try{
-            List<Bruker> liste = db.query(sql, new BeanPropertyRowMapper(Bruker.class));
+            List<Bruker> list = db.query(sql, new BeanPropertyRowMapper(Bruker.class));
 
-            for(Bruker bruker : liste){
+            for(Bruker bruker : list){
                 kryptertPassord = krypterPassord(bruker.getPassord());
 
-                sql = "UPDATE Bruker SET passord=?, WHERE id=?";
+                sql = "UPDATE Bruker SET passord=? WHERE id=?";
                 db.update(sql, kryptertPassord, bruker.getId());
             }
             return true;
         } catch (Exception e){
-            logger.error("Klarte ikke å oppdatere alle brukere");
+            logger.error("Klarte ikke å oppdatere alle brukere" + e);
             return false;
         }
     }

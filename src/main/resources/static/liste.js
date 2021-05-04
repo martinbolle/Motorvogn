@@ -46,8 +46,8 @@ function slettEnMotorvogn(id){
     })
 
 }
-const logout = () => {
-    $.get("/logout", function (){
-        window.location.href="/";
+const loggUt = () => {
+    $.get("/loggUt", function (){
+        window.location.href="/index.html";
     });
 }

@@ -116,15 +116,15 @@ public class MotorvognController {
     }
 
 
-    @GetMapping("/logout")
+    @GetMapping("/loggUt")
     public void loggUt(){
         session.setAttribute("Innlogget", false);
     }
 
 
 
-    @GetMapping("/login")
-    public boolean logInn(String brukernavn, String passord){
+    @GetMapping("/loggInn")
+    public boolean loggInn(String brukernavn, String passord){
         if(rep.loggInn(brukernavn, passord)){
             session.setAttribute("Innlogget", true);
             return true;
