@@ -120,9 +120,9 @@ public class MotorvognRepository {
         }
     }
 
-    public boolean sjekkPassord(String passord, String hashPassword) {
-        BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder(15);
-        return bCrypt.matches(passord, hashPassword);
+    public boolean sjekkPassord(String passord, String hash) {
+        boolean ok = BCrypt.checkpw(passord, hash);
+        return ok;
     }
 
     public boolean registrerBruker(Bruker bruker){
@@ -139,8 +139,8 @@ public class MotorvognRepository {
     }
 
     public String krypterPassord(String passord) {
-        BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder(15);
-        return bCrypt.encode(passord);
+        String kryptertPassord = BCrypt.hashpw(passord, BCrypt.gensalt(12));
+        return kryptertPassord;
     }
 
     public boolean krypterAllePassord(){

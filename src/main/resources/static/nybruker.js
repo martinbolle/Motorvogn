@@ -1,9 +1,9 @@
-$(()=>{
-    $("#registrer").click(()=>{
+$("#registrer").click(()=>{
         const bruker ={
             brukernavn : $("#brukernavn").val(),
             passord : $("#passord").val()
         }
+        console.log("Hei")
 
         if(loggInnValideringOK()){
             $.post("/nyBruker", bruker, () =>{
@@ -14,15 +14,12 @@ $(()=>{
                     if(OK){
                         window.location.href="/liste.html";
                     } else {
-                        $("#feil").html("feil i brukernavn eller passord");
+                        $("#feilRegistrering").html("feil i brukernavn eller passord");
                     }
                 })
             }).fail(jqXHR =>{
                 const json = $.parseJSON(jqXHR.responseText);
-                $("#feil").html(json.message);
+                $("#feilRegistrering").html(json.message);
             })
         }
     })
-
-
-})

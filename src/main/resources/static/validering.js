@@ -79,7 +79,7 @@ const validerBrukernavn = () => {
 
 const validerPassord = () => {
     const passord = $("#passord").val();
-    const regexp = /^(?=.*[A-ZÆØÅa-zøæå])(?=.*\d)[A-ZØÆÅa-zøæå\d]{8,}$/;
+    const regexp = /^(?=.*[A-ZÆØÅa-zøæå])(?=.*\d)[A-ZØÆÅa-zøæå\d]{4,}$/;
     const ok = regexp.test(passord);
     if (!ok) {
         $("#feilPassord").html("Passordet må være minimum 8 tegn, minst en bokstav og et tall");

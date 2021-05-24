@@ -1,5 +1,4 @@
-$(()=>{
-    $("#loggInn").click(()=> {
+ $("#loggInn").click(()=> {
         if(loggInnValideringOK()){
             const url = "/loggInn?brukernavn=" + $("#brukernavn").val()
                 + "&passord=" + $("#passord").val();
@@ -27,4 +26,3 @@ $(()=>{
             }
         })
     })
-});
